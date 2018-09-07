@@ -1,1 +1,3 @@
-{{ cms_render(block.configuration.code) }}
+{{ cms_render(block.configuration.code, {
+    block: block
+}) }}
