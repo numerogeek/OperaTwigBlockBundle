@@ -24,7 +24,7 @@ class Twig extends BaseBlock implements BlockTypeInterface
 
     public function createAdminConfigurationForm(FormBuilderInterface $builder)
     {
-        $builder->add('code', TwigType::class, [
+        $builder->add('code', TextareaType::class, [
             'attr' => [
                 'rows' => 20,
             ],
