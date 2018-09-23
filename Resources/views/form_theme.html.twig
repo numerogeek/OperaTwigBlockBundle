@@ -1,0 +1,15 @@
+
+{% block twig_widget %}
+    <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("{{ id }}", {
+            theme: "ace/theme/monokai",
+            mode: "ace/mode/twig",
+            autoScrollEditorIntoView: true,
+            maxLines: 30,
+            minLines: 20
+        });
+    </script>
+{% endblock %}

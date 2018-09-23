@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Opera\CoreBundle\Entity\Block;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Opera\TwigBlockBundle\Form\TwigType;
 
 class Twig extends BaseBlock implements BlockTypeInterface
 {
@@ -23,7 +24,11 @@ class Twig extends BaseBlock implements BlockTypeInterface
 
     public function createAdminConfigurationForm(FormBuilderInterface $builder)
     {
-        $builder->add('code', TextareaType::class);    
+        $builder->add('code', TwigType::class, [
+            'attr' => [
+                'rows' => 20,
+            ],
+        ]);    
     }
 
     public function configure(NodeDefinition $rootNode)
