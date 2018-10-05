@@ -9,8 +9,10 @@ use Opera\CoreBundle\Entity\Block;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Opera\TwigBlockBundle\Form\TwigType;
+use Opera\CoreBundle\BlockType\CacheableBlockInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Twig extends BaseBlock implements BlockTypeInterface
+class Twig extends BaseBlock implements BlockTypeInterface, CacheableBlockInterface
 {
     public function getType() : string
     {
@@ -37,5 +39,14 @@ class Twig extends BaseBlock implements BlockTypeInterface
             ->children()
                 ->scalarNode('code')->defaultValue('')->end()
             ->end();
+    }
+
+    public function getCacheConfig(OptionsResolver $resolver, Block $block)
+    {
+        $resolver->setDefaults([
+            // Set your configs for cache
+            // 'vary' => 'cookie',
+            // 'expires_after' => \DateInterval::createFromDateString('1 hour'),
+        ]);
     }
 }
