@@ -45,7 +45,7 @@ class Twig extends BaseBlock implements BlockTypeInterface, CacheableBlockInterf
     {
         $resolver->setDefaults([
             // Set your configs for cache
-            // 'vary' => 'cookie',
+            'vary' => 'cookie',
             // 'expires_after' => \DateInterval::createFromDateString('1 hour'),
         ]);
     }
