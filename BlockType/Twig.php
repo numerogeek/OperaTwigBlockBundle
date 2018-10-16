@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Opera\TwigBlockBundle\Form\TwigType;
 use Opera\CoreBundle\BlockType\CacheableBlockInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class Twig extends BaseBlock implements BlockTypeInterface, CacheableBlockInterface
 {
@@ -26,11 +27,16 @@ class Twig extends BaseBlock implements BlockTypeInterface, CacheableBlockInterf
 
     public function createAdminConfigurationForm(FormBuilderInterface $builder)
     {
-        $builder->add('code', TextareaType::class, [
+        $builder->add('twig', TwigType::class, [
             'attr' => [
                 'rows' => 20,
             ],
-        ]);    
+        ])
+        -> add('code', HiddenType::class, [
+            'attr' => [
+                'class' => 'hidden_code'
+            ]
+        ]);
     }
 
     public function configure(NodeDefinition $rootNode)
@@ -38,6 +44,7 @@ class Twig extends BaseBlock implements BlockTypeInterface, CacheableBlockInterf
         $rootNode
             ->children()
                 ->scalarNode('code')->defaultValue('')->end()
+                ->scalarNode('twig')->defaultValue('')->end()
             ->end();
     }
 
