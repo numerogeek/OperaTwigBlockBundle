@@ -1,0 +1,88 @@
+<div class='model-container'>
+    {% for key, value in vars %}
+        <div class="model-box">
+            <span class="model">
+                <span class="model-title" {% if value.groups is defined %}data-groups='{{value.groups|join(', ')}}'{% endif %}>
+                    {{ key }} 
+                    {% if value.entity is defined %}
+                        : <span class="class-name">{{ value.entity }}</span>
+                    {% endif %}
+                    {% if value.type is defined %}
+                        : <span class="class-name">{{ value.type }}</span>
+                    {% endif %}
+                </span>
+                {% if value.model is defined %}
+                    <span>{</span>
+                        <table class="model">
+                            <tbody>
+                                {% for propertyName, schema in value.model %}
+                                <tr>
+                                    <td style="vertical-align: top; padding-right: 0.2em;">{{propertyName}}</td>
+                                    <td style="vertical-align: top;">
+                                        <span class="model">
+                                            <span class="prop-type">
+                                                {% if schema.type %}
+                                                    {{ schema.type }}
+                                                {% else %}
+                                                    object <span class="class-name">{{ schema.ref|replace({'#/definitions/': ''}) }}</span>
+                                                {% endif %}
+                                            </span>
+                                            {% if schema.format %}
+                                                <span class="prop-format">{{ schema.format }}</span>
+                                            {% endif %}
+                                            {% if schema.type == 'array' %}
+                                                <span class="class-name">{{ schema.getItems.getRef |replace({'#/definitions/': ''}) }}</span>
+                                            {% endif %}
+                                        </span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    <span>}</span>
+                {% endif %}
+            </span>
+        </div>
+    {% endfor %}
+</div>
+<style>
+.model-container .model-box {
+    padding: 10px;
+    border-radius: 4px;
+    background: rgba(0,0,0,.1);
+    margin: 10px;
+}
+.model-container .model {
+    font-size: 13px;
+    font-weight: 300;
+    font-weight: 600;
+    color: #3b4151;
+}
+.model-container .model-title {
+    font-size: 16px;
+    color: #505050;
+}
+.model-container table {
+    width: 100%;
+    padding: 0 10px;
+    border-collapse: collapse;
+}
+.model-container table.model tbody tr td:first-of-type {
+    width: 174px;
+    padding: 0 0 0 2em;
+}
+.model-container table tbody tr td:first-of-type {
+    max-width: 20%;
+    min-width: 6em;
+    padding: 10px 0;
+}
+.model-container .prop-type {
+    color: #55a;
+}
+.model-container .prop-format {
+    color: #909090;
+}
+.model-container .class-name {
+    color: green;
+}
+</style>

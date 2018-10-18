@@ -7,14 +7,24 @@ use Opera\CoreBundle\BlockType\BlockTypeInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Opera\CoreBundle\Entity\Block;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Opera\TwigBlockBundle\Form\TwigType;
 use Opera\CoreBundle\BlockType\CacheableBlockInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Twig\Environment;
+use Opera\TwigBlockBundle\Serializer\ModelSerializer;
 
 class Twig extends BaseBlock implements BlockTypeInterface, CacheableBlockInterface
 {
+    private $twigEnvironment;
+    private $modelSeralizer;
+
+    public function __construct(Environment $twigEnvironment, ModelSerializer $modelSeralizer)
+    {
+        $this->twigEnvironment = $twigEnvironment;
+        $this->modelSeralizer = $modelSeralizer;
+    }
+
     public function getType() : string
     {
         return 'twig';
@@ -45,6 +55,19 @@ class Twig extends BaseBlock implements BlockTypeInterface, CacheableBlockInterf
             ->children()
                 ->scalarNode('code')->defaultValue('')->end()
                 ->scalarNode('twig')->defaultValue('')->end()
+                ->arrayNode('doc')
+                    ->treatNullLike(array())
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('entity')->end()
+                            ->scalarNode('type')->end()
+                            ->arrayNode('groups')
+                                ->scalarPrototype()->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                    ->end()
+                ->end()
             ->end();
     }
 

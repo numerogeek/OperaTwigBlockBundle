@@ -15,8 +15,10 @@ class ResourceCompilerPass implements CompilerPassInterface
         if ($container->hasParameter($parameter = 'twig.form.resources')) {
             $container->setParameter(
                 $parameter,
-                array_merge(
-                    ['@OperaTwigBlock/form_theme.html.twig'],
+                array_merge([
+                    '@OperaTwigBlock/form_theme.html.twig',
+                    '@OperaTwigBlock/twig_doc.html.twig',
+                    ],
                     $container->getParameter($parameter)
                 )
             );
