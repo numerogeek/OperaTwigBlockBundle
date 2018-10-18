@@ -10,7 +10,10 @@
         }
     ],
     "require": {
-        "opera-project/core-bundle": "^0.1"
+        "opera-project/core-bundle": "^0.1",
+        "nelmio/api-doc-bundle": "^3.3",
+        "jms/metadata": "^1.6",
+        "jms/serializer-bundle": "^2.2"
     },
     "autoload": {
         "psr-4": {
